@@ -39,7 +39,7 @@ console.log(store.incidentStatus(from, to));
 You can run the tests for this system by executing the following command in your terminal:
 
 ```
-npm run test
+npm run test src/__test__/store.test.ts
 ```
 
 ## Live Demo
