@@ -1,27 +1,47 @@
-# React + TypeScript + Vite
+# Store Incident Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This repository contains a simple Store Incident Management System implemented in TypeScript and React. The core logic of the system is encapsulated in the `Store` class, which is defined in the `src/Store.ts` file. This class provides methods for reporting and solving incidents, as well as retrieving incident status information.
 
-Currently, two official plugins are available:
+## Store Class
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The `Store` class is the main class in this system. It maintains a list of incidents and provides methods for interacting with these incidents. Here is a brief overview of the methods provided by the `Store` class:
 
-## Expanding the ESLint configuration
+- `reportIncident(description: string)`: This method allows you to report a new incident. You need to provide a description of the incident.
+- `solveIncident(id: number)`: This method allows you to mark an incident as solved. You need to provide the id of the incident.
+- `getAllIncidentDescriptions()`: This method returns a list of all incidents, with each incident represented as an object containing its id, description, and status.
+- `incidentStatus(from: Date, to: Date)`: This method returns an object containing information about the status of incidents that were reported between the given dates. The returned object contains the number of open and closed cases, the average solution time, and the maximum solution time.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Example Usage
 
-- Configure the top-level `parserOptions` property like this:
+Here is an example of how you can use the `Store` class:
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+```typescript
+const store = new Store();
+
+// Report a new incident
+store.reportIncident("The floor in the frozen zone is dirty");
+
+// Get all incidents
+console.log(store.getAllIncidentDescriptions());
+
+// Solve an incident
+store.solveIncident(1);
+
+// Get incident status
+const from = new Date();
+from.setHours(from.getHours() - 24); // 24 hours ago
+const to = new Date(); // Now
+console.log(store.incidentStatus(from, to));
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Running the Tests
+
+You can run the tests for this system by executing the following command in your terminal:
+
+```
+npm run test
+```
+
+## Live Demo
+
+You can see a live demo of this system at the following URL: [https://ismadot.github.io/store-status/](https://ismadot.github.io/store-status/)
