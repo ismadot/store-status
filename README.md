@@ -33,6 +33,7 @@ from.setHours(from.getHours() - 24); // 24 hours ago
 const to = new Date(); // Now
 console.log(store.incidentStatus(from, to));
 ```
+more detail [here](https://gist.github.com/ismadot/a79a0a0482bc414315570d87134bf2f3)
 
 ## Running the Tests
 
