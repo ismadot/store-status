@@ -1,13 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
-import { Store } from "./Store"; // Import the Store class
+import { IncidentStatus, Store } from "./Store"; // Import the Store class
 
-type IncidentStatus = {
-  openCases?: number;
-  closedCases?: number;
-  averageSolutionTime?: number;
-  maximumSolutionTime?: number;
-};
 
 type Incident = {
   id: number;
@@ -21,25 +15,29 @@ function App() {
   const [newIncidentDescription, setNewIncidentDescription] = useState("");
   const [incidentIdToSolve, setIncidentIdToSolve] = useState("");
   const [incidentStatus, setIncidentStatus] = useState<IncidentStatus>({});
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   useEffect(() => {
     setIncidents(store.getAllIncidentDescriptions());
     const from = new Date();
     from.setHours(from.getHours() - 24); // 24 hours ago
-    const to = new Date(); // Now
+    const to = new Date(); 
+    console.log("🚀 ~ file: App.tsx:28 ~ useEffect ~ store.incidentStatus(from, to):", store.incidentStatus(from, to))
     setIncidentStatus(store.incidentStatus(from, to));
-  }, [store]);
+  }, [store, lastUpdated]);
 
   const reportIncident = () => {
     store.reportIncident(newIncidentDescription);
     setIncidents(store.getAllIncidentDescriptions());
     setNewIncidentDescription("");
+    setLastUpdated(new Date());
   };
 
   const solveIncident = () => {
     store.solveIncident(Number(incidentIdToSolve));
     setIncidents(store.getAllIncidentDescriptions());
     setIncidentIdToSolve("");
+    setLastUpdated(new Date());
   };
 
   return (
@@ -81,8 +79,8 @@ function App() {
         <h2>Incident Status in the Last 24 Hours</h2>
         <p>Open Cases: {incidentStatus.openCases}</p>
         <p>Closed Cases: {incidentStatus.closedCases}</p>
-        <p>Average Solution Time: {incidentStatus.averageSolutionTime} hours</p>
-        <p>Maximum Solution Time: {incidentStatus.maximumSolutionTime} hours</p>
+        <p>Average Solution Time: {incidentStatus.averageSolutionTime?.toFixed(2)} hours</p>
+        <p>Maximum Solution Time: {incidentStatus.maximumSolutionTime?.toFixed(2)} hours</p>
       </div>
     </div>
   );
