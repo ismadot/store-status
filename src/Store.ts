@@ -1,4 +1,11 @@
-import { differenceInHours, isWithinInterval } from "date-fns";
+import { differenceInHours } from "date-fns";
+
+export type IncidentStatus = {
+  openCases?: number;
+  closedCases?: number;
+  averageSolutionTime?: number;
+  maximumSolutionTime?: number;
+};
 
 class Incident {
   id: number;
@@ -51,19 +58,24 @@ export class Store {
     }));
   }
 
-  incidentStatus(from: Date, to: Date) {
+  incidentStatus(from: Date, to: Date): IncidentStatus {
     let openCases = 0;
     let closedCases = 0;
     let totalSolutionTime = 0;
     let maximumSolutionTime = 0;
 
     this.incidents.forEach((incident) => {
-      if (isWithinInterval(incident.reportedAt, { start: from, end: to })) {
+      if (incident.reportedAt >= from && incident.reportedAt <= to) {
         if (incident.status === "open") {
           openCases++;
+          const solutionTime =
+            (new Date().getTime() - incident.reportedAt.getTime()) / 3600000;
+          maximumSolutionTime = Math.max(maximumSolutionTime, solutionTime);
         } else if (incident.status === "solved") {
           closedCases++;
-          const solutionTime = incident.getSolutionTime();
+          const solutionTime =
+            (incident.solvedAt!.getTime() - incident.reportedAt.getTime()) /
+            3600000;
           totalSolutionTime += solutionTime;
           maximumSolutionTime = Math.max(maximumSolutionTime, solutionTime);
         }
