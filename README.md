@@ -1,6 +1,6 @@
 # Store Incident Management System
 
-This repository contains a simple Store Incident Management System implemented in TypeScript and React. The core logic of the system is encapsulated in the `Store` class, which is defined in the `src/Store.ts` file. This class provides methods for reporting and solving incidents, as well as retrieving incident status information.
+This repository contains a simple Store Incident Management System implemented in TypeScript and React. The core logic of the system is encapsulated in the `Store` class, which is defined in the `./src/Store.ts` file. This class provides methods for reporting and solving incidents, as well as retrieving incident status information.
 
 ## Store Class
 
