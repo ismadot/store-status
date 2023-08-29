@@ -11,7 +11,7 @@ updates:
     labels:
       - npm dependencies
 
-  # Set update schedule for GitHub Actions
+  # Set update schedule for GitHub Actions 
   # https://docs.github.com/en/free-pro-team@latest/github/administering-a-repository/keeping-your-actions-up-to-date-with-dependabot
   - package-ecosystem: "github-actions"
     directory: "/"
